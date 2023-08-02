@@ -33,6 +33,8 @@ def delete_computer(db: Session, computer_id: int):
 def get_computer_count_by_employee(db: Session, employee_abbreviation: str):
     return db.query(Computer).filter(Computer.employee_abbreviation == employee_abbreviation).count()
 
+def get_computers_by_employee(db: Session, employee_abbreviation: str):
+    return db.query(Computer).filter(Computer.employee_abbreviation == employee_abbreviation)
 
 def get_computer_count_by_mac_address(db: Session, mac_address: str, exclude: int = 0):
     return db.query(Computer).filter(Computer.mac_address == mac_address, Computer.id != exclude).count()
