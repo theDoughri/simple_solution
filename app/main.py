@@ -31,6 +31,7 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+# To ensures that each request gets its own separate database session
 def get_db():
     db = SessionLocal()
     try:
@@ -74,14 +75,12 @@ def get_single_computer(computer_id: int, db: Session = Depends(get_db)):
 # Get all computers
 @app.get("/computers/", response_model=list[Computer])
 def get_all_computer(db: Session = Depends(get_db)):
-    computers = get_all_computers(db)
-    return computers
+    return get_all_computers(db)
 
 #Get all computers by employee
-@app.get("/employee_computers/{employee_abbreviation}", response_model=list[Computer])
+@app.get("/computers/by-emplyee/{employee_abbreviation}", response_model=list[Computer])
 def get_all_computer_by_employee(employee_abbreviation: str, db: Session = Depends(get_db)):
-    computers = get_computers_by_employee(db, employee_abbreviation)
-    return computers
+    return get_computers_by_employee(db, employee_abbreviation)
 
 # Update a computer
 @app.put("/computers/{computer_id}", response_model=Computer)
@@ -111,11 +110,11 @@ def update_existing_computer(computer_id: int, computer_data: dict, db: Session 
     finally:
         return get_computer(db, computer_id)
 
-#remove a computer
+# Remove a computer
 @app.delete("/computers/{computer_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_existing_computer(computer_id: int, db: Session = Depends(get_db)):
     computer = get_computer(db, computer_id)
     if not computer:
         raise HTTPException(status_code=404, detail="Computer not found")
     delete_computer(db, computer_id)
-    return
+    return True
