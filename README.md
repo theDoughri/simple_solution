@@ -9,9 +9,9 @@ This is a simple computer tracking solution implemented in **Python** using the 
 ## Setup the Environment:
 1. Clone the project locally.
 2. Open a terminal or command line in the **simple_solution** directory.
-3. Run the command `pip install -r requirements.txt` to install all required dependencies.
-4. Create a new environment named **env** with the command `python -m venv env`.
-5. After successfully creating the environment, activate it using the command `source env/bin/activate` (for Unix-like systems) or `env\Scripts\activate` (for Windows).
+3. Create a new environment named **env** with the command `python -m venv env`.
+4. After successfully creating the environment, activate it using the command `source env/bin/activate` (for Unix-like systems) or `env\Scripts\activate` (for Windows).
+5. Run the command `pip install -r requirements.txt` to install all required dependencies.
 
 ## Running the Solution:
 1. Ensure the Greenbone notification server is running properly and the local **port 8080** is mapped to its running Docker image.
