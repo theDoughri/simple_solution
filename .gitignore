@@ -5,3 +5,4 @@ env/
 .DS_Store
 app/computers.db
 .DS_Store
+computers.db
