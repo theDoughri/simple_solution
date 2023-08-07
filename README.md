@@ -20,8 +20,10 @@ This is a simple computer tracking solution implemented in **Python** using the 
 4. Verify that the application starts up correctly and Uvicorn is running on its default configuration at **http://127.0.0.1:8000**.
 
 ## Testing the App:
-Using a web browser, open the link **http://127.0.0.1:8000**, which will redirect you to the Swagger documentation at **http://127.0.0.1:8000/docs**. This will allow you to perform the endpoints functional tests, as shown in the screenshot:
+1. Using a web browser, open the link **http://127.0.0.1:8000**, which will redirect you to the Swagger documentation at **http://127.0.0.1:8000/docs**. This will allow you to perform the endpoints functional tests, as shown in the screenshot:
 ![Swagger Doc](Screenshot.png)
 
-Please note that this solution can be further improved by implementing unit testing for better code quality and reliability.
+2. On the other hand, you can also verify the functionality of `main.py` using `pytest` testing freamwork using the command `pytest test_main.py`.
+
+Please note that this solution can be further improved by implementing more unit testing for better code quality and reliability.
 The current implementation does not include any validation checks for the computer entries' IP addresses or MAC addresses... However, these checks could be implemented at the front-end level to ensure data integrity and accuracy.

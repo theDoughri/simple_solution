@@ -3,3 +3,6 @@ uvicorn
 sqlalchemy
 alembic
 requests
+pytest
+starlette
+httpx
