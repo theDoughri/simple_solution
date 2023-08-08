@@ -21,9 +21,9 @@ def get_all_computers(db: Session):
     return db.query(Computer).all()
 
 def update_computer(db: Session, computer_id: int, computer_data: dict):
-    db.query(Computer).filter(Computer.id == computer_id).update(computer_data)
+    count = db.query(Computer).filter(Computer.id == computer_id).update(computer_data)
     db.commit()
-    return True
+    return count
 
 def delete_computer(db: Session, computer_id: int):
     db.query(Computer).filter(Computer.id == computer_id).delete()

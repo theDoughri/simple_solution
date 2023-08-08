@@ -21,7 +21,55 @@ def override_get_db():
         yield db
     finally:
         db.close()
+'''Test cases:'''
 
+''' Testing creat_new_computer '''
+def test_create_new_computer_success():
+
+    idx = 1 # could be used in loop for multiple new computers creation
+    # Make a request to the endpoint to add a new computer for an existing employee
+    computer_data = {"mac_address": f"00:00:00:00:00:{idx:02d}", 
+                        "computer_name": f"PC_{idx:02d}", 
+                        "ip_address": f"192.168.0.{idx}",
+                        "employee_abbreviation": "ASD", 
+                        "description": f"Abdessamad laptop {idx}"
+                        }
+    response = client.post("/computers/", json=computer_data)
+    
+    assert response.status_code == 200
+    data = response.json()
+    assert data["mac_address"] == f"00:00:00:00:00:{idx:02d}"
+    assert data["computer_name"] == f"PC_{idx:02d}"
+    assert data["ip_address"] == f"192.168.0.{idx}"
+    assert data["employee_abbreviation"] == "ASD"
+    assert data["description"] == f"Abdessamad laptop {idx}"
+    assert "id" in data  # Make sure the id created
+
+def test_create_new_computer_employee_abbreviation_too_long():
+    # Make a request with an employee abbreviation that is too long
+    computer_data = {"mac_address": "00:00:00:00:00:99", 
+                    "computer_name": "PC_99", 
+                    "ip_address": "192.168.0.99",
+                    "employee_abbreviation": "DAS_ASD", 
+                    "description": "Abdessamad laptop 99"
+                    }
+    response = client.post("/computers/", json=computer_data)
+
+    assert response.status_code == 403
+    assert response.json() == {"detail": "Employee abbreviation too long"}
+
+def test_create_new_computer_employee_abbreviation_Mac_duplicated():
+    # Make a request with an employee duplicated MAC
+    computer_data = {"mac_address": "00:00:00:00:00:01", 
+                    "computer_name": "PC_99", 
+                    "ip_address": "192.168.0.99",
+                    "employee_abbreviation": "ASD", 
+                    "description": "Abdessamad laptop 99"
+                    }
+    response = client.post("/computers/", json=computer_data)
+
+    assert response.status_code == 403
+    assert response.json() == {"detail": "Could not add the new computer. Ensure MAC address is not duplicated"}
 
 ''' Testing get_single_computer '''
 def test_get_single_computer_existing():
