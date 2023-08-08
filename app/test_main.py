@@ -10,14 +10,9 @@ import os
 
 client = TestClient(app)
 
-
-# Database URL
-DATABASE_URL = "sqlite:///./computers.db"
-engine = create_engine(DATABASE_URL)
-
 # Dummy DB URL
-DATABASE_URL = "sqlite:///./dummy_computers.db"
-override_engine = create_engine(DATABASE_URL)
+DUMMY_DATABASE_URL = "sqlite:///./dummy_computers.db"
+override_engine = create_engine(DUMMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=override_engine)
 
 def override_get_db():
@@ -52,14 +47,13 @@ def test_get_all_computer_existing():
     assert json.dumps(data).count("id") >= 1  # Make sure we recieve at least one computer data
 
 def test_get_all_computer_nothing():
-    # Assume we have an empty db
-    # Create adummy DB
+    # Let's creat an empty dummy db
     app.dependency_overrides[get_db] = override_get_db
     Base.metadata.create_all(bind=override_engine)
     response = client.get("/computers")
     assert response.status_code == 200
     assert len(response.json()) == 0
 
-    # Reset session maker and remove dummy databasse
+    # Reset session maker and remove dummy db file
     app.dependency_overrides[get_db] = get_db
     os.remove("dummy_computers.db")
