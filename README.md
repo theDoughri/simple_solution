@@ -32,9 +32,12 @@ This is a simple computer tracking solution implemented in **Python** using the 
 
 ## Testing the App:
 1. Using a web browser, open the link **http://127.0.0.1:8000**, which will redirect you to the Swagger documentation at **http://127.0.0.1:8000/docs**. This will allow you to perform the endpoints functional tests, as shown in the screenshot:
+
 ![Swagger Doc](Screenshot.png)
 
-2. On the other hand, you can also verify the functionality of `main.py` using `pytest` testing freamwork using the command `pytest test_main.py`.
+2. On the other hand, you can also verify the functionality of `main.py` using `pytest` testing freamwork using the command `pytest test_main.py`, as shown in the next screenshot:
+
+![Swagger Doc](Next%20screenshot.png)
 
 ## Potential Application Enhancements:
 
